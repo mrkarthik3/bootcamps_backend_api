@@ -1,0 +1,23 @@
+{
+  "name": "bootcamps_api",
+  "version": "1.0.0",
+  "description": "Bootcamps Backend API",
+  "main": "index.js",
+  "scripts": {
+    "start": "set NODE_ENV = production && node server",
+    "dev": "nodemon server"
+  },
+  "keywords": [
+    "backend",
+    "api"
+  ],
+  "author": "mrkarthik3",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
