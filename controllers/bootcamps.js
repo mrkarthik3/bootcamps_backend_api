@@ -19,10 +19,12 @@ exports.getBootcamp = async (req, res, next) => {
   try {
     const bootcamp = await Bootcamp.findById(req.params.id); // get 'id' from URL
     if (!bootcamp) {
+      // bootcamp = null when ID is properly formatted and is not found
       return res.status(400).json({ success: false });
     }
     res.status(200).json({ success: true, data: bootcamp });
   } catch (err) {
+    // when ID is not properly formatted, promise fails... this runs
     res.status(404).json({ success: false });
   }
 };
