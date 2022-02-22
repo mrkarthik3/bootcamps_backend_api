@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
+const geocoder = require("../utils/geocoder");
 
 const BootcampSchema = new mongoose.Schema({
   name: {
@@ -87,6 +89,39 @@ const BootcampSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+// Create bootcamp slug from the name property
+// This is mongoose middleware of 'pre' type.
+// So runs before saving to DB
+// Only normal function must be used as callback.
+// Note that next must be passed as argument.
+// and run next() at the end
+BootcampSchema.pre("save", function (next) {
+  // this refers to the JSON object being saved into DB.
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+// Geocode & create location field
+BootcampSchema.pre("save", async function (next) {
+  const loc = await geocoder.geocode(this.address);
+  // constructing a GeoJSON object
+  this.location = {
+    type: "Point",
+    coordinates: [loc[0].longitude, loc[0].latitude],
+    formattedAddress: loc[0].formattedAddress,
+    street: loc[0].streetName,
+    city: loc[0].city,
+    state: loc[0].stateCode,
+    zipcode: loc[0].zipcode,
+    country: loc[0].countryCode,
+  };
+
+  // do not save address in DB as I'm putting location data like above.
+  // This prevents that..
+  this.address = undefined;
+  next();
 });
 
 module.exports = mongoose.model("Bootcamp", BootcampSchema);
