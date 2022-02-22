@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
 const colors = require("colors");
+const errorHander = require("./middleware/error");
 
 // Load env variables by specifying path to config.env file
 dotenv.config({ path: "./config/config.env" });
@@ -12,6 +13,9 @@ connectDB();
 
 // Router files importing
 const bootcamps = require("./routes/bootcamps");
+
+// Error Handler Middleware Import
+const errorHandler = require("./middleware/error");
 
 const app = express();
 
@@ -26,6 +30,9 @@ if (process.env.NODE_ENV === "development") {
 
 // Mount routers
 app.use("/api/v1/bootcamps", bootcamps);
+
+// error hander must be used after router is mounted
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
