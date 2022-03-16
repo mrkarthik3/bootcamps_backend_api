@@ -14,9 +14,11 @@
   "author": "mrkarthik3",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.2.3",
     "colors": "^1.4.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "geocoder": "^0.1.0",
     "mongoose": "^6.2.2",
     "morgan": "^1.10.0",
     "node-geocoder": "^4.0.0",

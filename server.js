@@ -13,6 +13,7 @@ connectDB();
 
 // Router files importing
 const bootcamps = require("./routes/bootcamps");
+const courses = require("./routes/courses");
 
 // Error Handler Middleware Import
 const errorHandler = require("./middleware/error");
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Mount routers
 app.use("/api/v1/bootcamps", bootcamps);
+app.use("/api/v1/courses", courses);
 
 // error hander must be used after router is mounted
 app.use(errorHandler);

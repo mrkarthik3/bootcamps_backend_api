@@ -5,10 +5,21 @@ const {
   createBootcamp,
   updateBootcamp,
   deleteBootcamp,
+  getBootcampsInRadius,
 } = require("../controllers/bootcamps.js");
+
+// Include other resource routers
+const courseRouter = require('./courses')
+
 const router = express.Router();
 
+// Re-route into other resource routers
+// When this route is hit, it will redirect & point to '/' in 'courses' router (coming from line 12)
+router.use('/:bootcampId/courses', courseRouter);
+
 // '/' is equal to '/api/v1/bootcamps'
+
+router.route("/radius/:zipcode/:distance").get(getBootcampsInRadius);
 
 // GET request to '/' is handled by getBootCamps controller method
 // POST request to '/' is handled by createBootcamp controller method
